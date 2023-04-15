@@ -10,6 +10,9 @@ const AuthorizationService = (api : AxiosInstance = defaultAxiosInstance) => ({
         const data = await api.post('login', input)
         console.log(data['data']['accessToken'])
         return data['data']['accessToken']
+    },
+    logOut: async () => {
+        localStorage.setItem("accessToken", "")
     }
 })
 

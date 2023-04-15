@@ -9,8 +9,8 @@ const config = {
 
 const EmployeeService = (api: AxiosInstance = defaultAxiosInstance) => ({
     getAllEmloyees: async () => {
+        console.log("test")
         const data = await api.get('employee', config)
-        console.log(data['data'])
         return data['data']
     }
 })

@@ -1,6 +1,6 @@
 import React from 'react'
-import UserLogin from '../Components/UserLogin'
-import { Auth } from '../Types/Auth'
+import UserLogin from '../UserLogin'
+import { Auth } from '../../Types/Auth'
 
 export default function Register() {
   const register: Auth = {

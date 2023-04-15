@@ -1,15 +1,24 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Typography, Link } from '@mui/material'
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material'
 import React from 'react'
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import LoginIcon from '@mui/icons-material/Login';
 
 export default function Navigation() {
-  const navigate = useNavigate()
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Link component={RouterLink} color={"inherit"} to={"/login"}>Login</Link>
-          <Link component={RouterLink} color={"inherit"} to={"/"}>Home</Link>
+          <Typography>Company</Typography>
+          <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="login"
+          sx={{ mr: 1, ml: "auto" }}
+          component={RouterLink} 
+          to={"/login"}>
+            <LoginIcon/>
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
