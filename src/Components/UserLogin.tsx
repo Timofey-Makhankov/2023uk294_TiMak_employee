@@ -4,14 +4,13 @@ import AuthorizationService from '../Service/AuthorisationService'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '../Types/Auth'
 import { useState } from 'react'
-import { ErrorMessage, Field, Form, Formik, useFormik } from 'formik'
+import { useFormik } from 'formik'
 
 export default function UserLogin({ prop }: { prop: Auth }) {
     const navigate = useNavigate()
     const [alert, setAlert] = useState<boolean>(false)
     const [alertContent, setAlertContent] = useState<string>("")
-    var email = ""
-    var password = ""
+    const isEmpty = (str: string | undefined) => (str === undefined ? false : true);
 
     const login = (email: string, password: string) => {
         console.log("Inside the login function")
@@ -32,6 +31,18 @@ export default function UserLogin({ prop }: { prop: Auth }) {
         initialValues: {
             email: "",
             password: ""
+        },
+        validate: (values) => {
+            const errors: { email?: string, password?: string } = {}
+            if (!values.email) {
+                errors.email = "Required"
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                errors.email = "Invalid email address"
+            }
+            if (!values.password){
+                errors.password = "Required"
+            }
+            return errors
         },
         onSubmit: (values, { setSubmitting }) => {
             setTimeout(() => {
@@ -103,25 +114,23 @@ export default function UserLogin({ prop }: { prop: Auth }) {
                                 label="Email"
                                 type='email'
                                 value={formik.values.email}
-                                variant='outlined'
                                 required
                                 onChange={formik.handleChange}
-                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                helperText={formik.touched.email && formik.errors.email} />
+                                error={isEmpty(formik.errors.email)}
+                                helperText={formik.errors.email ? formik.errors.email : ""} />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 id='password'
                                 name="password"
-                                label="password"
-                                variant='outlined'
+                                label="Password"
                                 type="password"
                                 /* autoComplete="current-password" */
                                 required
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
-                                error={formik.touched.password && Boolean(formik.errors.password)}
-                                helperText={formik.touched.password && formik.errors.password} />
+                                error={isEmpty(formik.errors.password)}
+                                helperText={isEmpty(formik.errors.password) ? formik.errors.password : ""} />
                         </Grid>
                         <Grid item xs={12}>
                             <Button variant='contained' type='submit'/*onClick={login} disabled={isSubmitting || !isValid}*/>{prop.title}</Button>
