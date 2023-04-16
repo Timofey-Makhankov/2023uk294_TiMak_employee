@@ -1,30 +1,43 @@
-import { Button } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Button, Grid } from '@mui/material'
+import { useEffect, useState } from 'react'
 import EmployeeService from '../../Service/EmployeeService'
 import { useNavigate } from 'react-router-dom'
+import { Employee } from '../../Types/Employee'
+import EmployeeCard from '../EmployeeCard'
 
 export default function Main() {
 
-  const [employeeList, setEmployeeList] = useState([])
+  const [employeeList, setEmployeeList] = useState<Employee[]>([])
   const navigate = useNavigate()
 
-  const getList = () => {
+  const load = () => {
     EmployeeService().getAllEmloyees()
-    .then((data) => {
-      console.log("test")
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log(error)
-      navigate("/login")
-    })
+      .then((data) => {
+        console.log("test")
+        console.log(data)
+        setEmployeeList(data)
+      })
+      .catch((error) => {
+        console.log(error)
+        navigate("/login")
+      })
   }
 
   useEffect(() => {
-    getList()
+    load()
   }, [])
-  
-  return (
-    <Button variant="contained" onClick={() => {getList()}}>GetAllEmployess</Button>
+
+  return (<>
+    <Button variant="contained" onClick={() => { load() }}>GetAllEmployess</Button>
+    <Grid container>
+      {employeeList.map((employee: Employee) => {
+        return (
+          <Grid item xs={3}>
+            <EmployeeCard prop={employee} />
+          </Grid>
+        )
+      })}
+    </Grid>
+  </>
   )
 }

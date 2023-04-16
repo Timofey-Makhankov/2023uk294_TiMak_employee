@@ -1,7 +1,8 @@
 import React from 'react'
+import { Employee } from '../Types/Employee'
 
-export default function EmployeeCard() {
+export default function EmployeeCard({ prop }: { prop: Employee }) {
   return (
-    <div>EmployeeCard</div>
+    <div>{prop.last_name}</div>
   )
 }
