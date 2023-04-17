@@ -4,6 +4,7 @@ import EmployeeService from '../../Service/EmployeeService'
 import { useNavigate } from 'react-router-dom'
 import { Employee } from '../../Types/Employee'
 import EmployeeCard from '../EmployeeCard'
+import AddCard from '../AddCard'
 
 export default function Main() {
 
@@ -37,6 +38,9 @@ export default function Main() {
             </Grid>
           )
         })}
+        <Grid item xs={3} justifyContent={"center"} alignItems={"center"}>
+          <AddCard/>
+        </Grid>
       </Grid>
     </>
   )

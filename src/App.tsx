@@ -18,7 +18,12 @@ function App() {
       } />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      <Route path='/employee/:id' element={<EditEmployee />} />
+      <Route path='/employee/:id' element={
+        <>
+          <Navigation />
+          <EditEmployee />
+        </>
+      } />
       <Route path='*' element={<NoPage />} />
     </Routes>
   );

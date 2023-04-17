@@ -4,7 +4,7 @@ import { defaultAxiosInstance } from "./Api";
 const EmployeeService = (api: AxiosInstance = defaultAxiosInstance) => ({
     getAllEmloyees: async () => {
         console.log("test")
-        const data = await api.get('employee'/*, config*/)
+        const data = await api.get('employee')
         return data['data']
     }
 })
