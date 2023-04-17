@@ -6,6 +6,7 @@ import Main from './Components/Pages/Main';
 import NoPage from './Components/Pages/NoPage';
 import Navigation from './Components/Navigation';
 import EditEmployee from './Components/Pages/EditEmployee';
+import CreateEmployee from './Components/Pages/CreateEmployee';
 
 function App() {
   return (
@@ -24,6 +25,11 @@ function App() {
           <EditEmployee />
         </>
       } />
+      <Route path='/create' element={
+        <>
+          <Navigation />
+          <CreateEmployee />
+        </>} />
       <Route path='*' element={<NoPage />} />
     </Routes>
   );

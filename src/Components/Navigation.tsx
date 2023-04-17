@@ -1,4 +1,4 @@
-import { AppBar, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
+import { AppBar, Box, IconButton, Toolbar, Tooltip, Link, Typography } from '@mui/material'
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
@@ -8,7 +8,7 @@ export default function Navigation() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography>Company</Typography>
+          <Typography><Link underline="none" component={RouterLink} color={"inherit"} to={"/"}>Company</Link></Typography>
           <Tooltip title="Logout">
             <IconButton
               size="large"

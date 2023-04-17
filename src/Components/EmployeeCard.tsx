@@ -3,16 +3,21 @@ import { Employee } from '../Types/Employee'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Card, CardActions, CardContent, CardMedia, IconButton, Tooltip, Typography } from '@mui/material'
-
-function handleDelete() {
-  alert("You deleted me")
-}
-
-function handleEdit() {
-  alert("You edited me")
-}
+import { Link as RouterLink } from 'react-router-dom';
+import EmployeeService from '../Service/EmployeeService';
 
 export default function EmployeeCard({ prop }: { prop: Employee }) {
+
+  function handleDelete(id: number | undefined) {
+    if (id !== undefined) {
+      EmployeeService().deleteEmployee(id.toString())
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((error) => { console.log(error) })
+    }
+  }
+
   return (
     <Card>
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -35,7 +40,8 @@ export default function EmployeeCard({ prop }: { prop: Employee }) {
             edge="start"
             color="inherit"
             aria-label="Edit"
-            onClick={handleEdit}
+            component={RouterLink}
+            to={`/employee/${prop.id}`}
             sx={{ ml: "auto" }} >
             <EditIcon />
           </IconButton>
@@ -46,8 +52,8 @@ export default function EmployeeCard({ prop }: { prop: Employee }) {
             edge="start"
             color="inherit"
             aria-label="Delete"
-            onClick={handleDelete}
-            sx={{ mr: 1, ml: "auto" }} >
+            onClick={() => { handleDelete(prop.id) }}
+            sx={{ mr: 1, ml: 1 }} >
             <DeleteIcon />
           </IconButton>
         </Tooltip>

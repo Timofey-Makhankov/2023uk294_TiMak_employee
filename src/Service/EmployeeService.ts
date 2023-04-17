@@ -8,19 +8,21 @@ const EmployeeService = (api: AxiosInstance = defaultAxiosInstance) => ({
         const data = await api.get('employee')
         return data['data']
     },
-    getEmployeeById: async (id: number) => {
+    getEmployeeById: async (id: string) => {
         const data = await api.get(`employee/${id}`)
-        return data['data']
+        return data.data
     },
     createEmployee: async (employee: Employee) => {
+        console.log("hello")
         const data = await api.post("employee", employee)
+        console.log("2. hallo")
         return data['data']
     },
-    updateEmployee: async (id: number, employee: Employee) => {
+    updateEmployee: async (id: string, employee: Employee) => {
         const data = await api.put(`employee/${id}`, employee)
         return data['data']
     },
-    deleteEmployee: async (id: number) => {
+    deleteEmployee: async (id: string) => {
         const data = await api.delete(`employee/${id}`)
         return data['data']
     }
