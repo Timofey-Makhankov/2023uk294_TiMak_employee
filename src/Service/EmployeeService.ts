@@ -2,6 +2,12 @@ import { AxiosInstance } from "axios";
 import { defaultAxiosInstance } from "./Api";
 import { Employee } from "../Types/Employee";
 
+/**
+ * This Employee Service Implements the 5 CRUD Methods to
+ * Access the Data from The JSON Webserver
+ * @param api The Axios Object given or default Axios Object
+ * @returns a response from the JSON webserver
+ */
 const EmployeeService = (api: AxiosInstance = defaultAxiosInstance) => ({
     getAllEmloyees: async () => {
         console.log("test")

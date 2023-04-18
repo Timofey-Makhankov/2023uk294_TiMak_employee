@@ -1,22 +1,34 @@
-import { Box, Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material'
+import { Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Employee } from '../../Types/Employee'
 import EmployeeService from '../../Service/EmployeeService'
-import { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
+/**
+ * This shows the Employee Editor. shows the given values
+ * and a form to fill in with new values
+ * @returns The Employee Editor Page (Component)
+ */
 export default function EditEmployee() {
   const [employee, setEmployee] = useState<Employee>()
 
+  const navigate = useNavigate()
+
   const [firstname, setFirstname] = useState<string>("")
   const [lastname, setLastname] = useState<string>("")
-  const [birthDate, setBirthDate] = useState<Dayjs | null>(null)
-  const [hireDate, setHireDate] = useState<Dayjs | null>(null)
+  const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs(employee?.birth_date, "YYYY-MM-DD"))
+  const [hireDate, setHireDate] = useState<Dayjs | null>(dayjs(employee?.birth_date, "YYYY-MM-DD"))
   const [gender, setGender] = useState<string>("")
 
   let { id } = useParams()
+
+  /**
+   * Sets the Values from the reponse of a single employee Object 
+   * from JSON webserver
+   */
   useEffect(() => {
     if (id !== undefined) {
       EmployeeService().getEmployeeById(id)
@@ -24,11 +36,40 @@ export default function EditEmployee() {
           console.log(res)
           setEmployee(res)
         })
+        .catch(() => {
+          navigate("/login")
+        })
     }
-  }, [id])
+    if (employee !== undefined) {
+      setValues(employee)
+    }
+  }, [id, employee, navigate])
 
+  /**
+   * Sets all the useStates with the information from the given employee Object
+   * @param employee Employee Object from the response
+   */
+  function setValues(employee: Employee) {
+    setFirstname(employee.first_name)
+    setLastname(employee.last_name)
+  }
+
+  /**
+   * Handles the Information from the submit
+   */
   const handleSubmit = () => {
-
+    if (id !== undefined && employee !== undefined) {
+      const newEnployee: Employee = {
+        first_name: firstname,
+        last_name: lastname,
+        birth_date: birthDate ? birthDate.format("YYYY-MM-DD") : "",
+        hire_date: hireDate ? hireDate.format("YYYY-MM-DD") : "",
+        gender: gender
+      }
+      EmployeeService().updateEmployee(id, newEnployee)
+        .then(() => { navigate("/") })
+        .catch((error) => { console.log(error) })
+    }
   }
 
   return (
@@ -42,7 +83,7 @@ export default function EditEmployee() {
             <Typography>Firstname: {employee?.first_name}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <TextField />
+            <TextField label="Firstname" value={firstname} onChange={(value) => { setFirstname(value.target.value) }} />
           </Grid>
         </Grid>
       </Grid>
@@ -52,7 +93,7 @@ export default function EditEmployee() {
             <Typography>Lastname: {employee?.last_name}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <TextField />
+            <TextField label="Lastname" value={lastname} onChange={(value) => { setLastname(value.target.value) }} />
           </Grid>
         </Grid>
       </Grid>
@@ -63,7 +104,7 @@ export default function EditEmployee() {
           </Grid>
           <Grid item xs={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker label="Hiredate" value={hireDate} onChange={(value) => { setHireDate(value) }} />
+              <DatePicker label="Hiredate" value={birthDate} onChange={(value) => { setBirthDate(value) }} />
             </LocalizationProvider>
           </Grid>
         </Grid>
@@ -75,7 +116,7 @@ export default function EditEmployee() {
           </Grid>
           <Grid item xs={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker label="Birthdate" disableFuture value={birthDate} onChange={(value) => { setBirthDate(value) }} />
+              <DatePicker label="Birthdate" disableFuture value={hireDate} onChange={(value) => { setHireDate(value) }} />
             </LocalizationProvider>
           </Grid>
         </Grid>
@@ -89,6 +130,7 @@ export default function EditEmployee() {
             <FormControl>
               <FormLabel id="gender-radio">Gender</FormLabel>
               <RadioGroup
+                value={gender}
                 row
                 aria-labelledby="gender-radio"
                 name="gender-radio"

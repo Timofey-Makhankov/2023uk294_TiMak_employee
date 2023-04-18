@@ -1,7 +1,11 @@
 import React from 'react'
-import UserLogin from '../UserLogin'
+import UserLogin from '../Organisms/UserLogin'
 import { Auth } from '../../Types/Auth'
 
+/**
+ * This shows the login page
+ * @returns The Login page (component)
+ */
 export default function Login() {
 
   const login: Auth = {

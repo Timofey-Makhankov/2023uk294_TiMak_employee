@@ -1,21 +1,29 @@
 import { Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react'
 import { Employee } from '../../Types/Employee';
 import EmployeeService from '../../Service/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * This page shows the creating of an employee page
+ * @returns The Create Employee Page (Component)
+ */
 export default function CreateEmployee() {
     const [firstname, setFirstname] = useState<string>("")
     const [lastname, setLastname] = useState<string>("")
-    const [birthDate, setBirthDate] = useState<Dayjs | null>(null)
-    const [hireDate, setHireDate] = useState<Dayjs | null>(null)
+    const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs())
+    const [hireDate, setHireDate] = useState<Dayjs | null>(dayjs())
     const [gender, setGender] = useState<string>("")
 
     const navigate = useNavigate()
 
+    /**
+     * It creates a request from the given employee object
+     * @param employee Employee Object
+     */
     const handleRequest = (employee: Employee) => {
         console.log("create.")
         EmployeeService().createEmployee(employee)
@@ -23,6 +31,9 @@ export default function CreateEmployee() {
             .catch((error) => { console.log(error); alert(error) })
     }
 
+    /**
+     * handles the submmitting of the form
+     */
     const handleSubmit = () => {
         if (birthDate !== null && hireDate !== null) {
             const employee: Employee = {
@@ -42,10 +53,10 @@ export default function CreateEmployee() {
                 <Typography variant="h3" component="h2">Create Employee</Typography>
             </Grid>
             <Grid item xs={12}>
-                <TextField onChange={(values) => { console.log(values.target.value); setFirstname(values.target.value) }} />
+                <TextField required label="Firstname" onChange={(values) => { console.log(values.target.value); setFirstname(values.target.value) }} />
             </Grid>
             <Grid item xs={12}>
-                <TextField onChange={(values) => { setLastname(values.target.value) }} />
+                <TextField required label="Lastname" onChange={(values) => { setLastname(values.target.value) }} />
             </Grid>
             <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -60,7 +71,7 @@ export default function CreateEmployee() {
             </Grid>
 
             <Grid item xs={12}>
-                <FormControl>
+                <FormControl required>
                     <FormLabel id="gender-radio">Gender</FormLabel>
                     <RadioGroup
                         row

@@ -3,6 +3,10 @@ import React from 'react'
 import { Link as RouterLink } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 
+/**
+ * The Navigation bar for the Website
+ * @returns A Navication Bar Organims (Component)
+ */
 export default function Navigation() {
   return (
     <Box sx={{ flexGrow: 1 }}>

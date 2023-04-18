@@ -4,8 +4,14 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+/**
+ * The Default URL for the Axios Request Object
+ */
 const BASE_URL = "http://localhost:3030/";
 
+/**
+ * Creates an Axios Object with the given base URL
+ */
 export const defaultAxiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
 });

@@ -1,13 +1,16 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register'
 import Main from './Components/Pages/Main';
-import NoPage from './Components/Pages/NoPage';
-import Navigation from './Components/Navigation';
+import NotFound from './Components/Pages/NoPage';
+import Navigation from './Components/Organisms/Navigation';
 import EditEmployee from './Components/Pages/EditEmployee';
 import CreateEmployee from './Components/Pages/CreateEmployee';
 
+/**
+ * This has all the routes of the Website
+ * @returns The App Component
+ */
 function App() {
   return (
     <Routes>
@@ -30,7 +33,7 @@ function App() {
           <Navigation />
           <CreateEmployee />
         </>} />
-      <Route path='*' element={<NoPage />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 }
