@@ -33,7 +33,6 @@ export default function EditEmployee() {
     if (id !== undefined) {
       EmployeeService().getEmployeeById(id)
         .then((res) => {
-          console.log(res)
           setEmployee(res)
         })
         .catch(() => {

@@ -15,6 +15,6 @@ export default function Login() {
     route: "/register"
   }
   return (
-    <UserLogin prop={login}/>
+    <UserLogin prop={login} />
   )
 }

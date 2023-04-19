@@ -7,30 +7,28 @@ import { defaultAxiosInstance } from "./Api";
  * @param api The Axios Object given or default Axios Object
  * @returns a response from the JSON webserver
  */
-const AuthorizationService = (api : AxiosInstance = defaultAxiosInstance) => ({
-    logInUser: async (email: string, password: string) => {
-        const input = {
-            email : email, 
-            password : password
-       }
-        const data = await api.post('login', input)
-        console.log(data['data']['accessToken'])
-        return data['data']['accessToken']
-    },
-    
-    logOut: async () => {
-        localStorage.setItem("accessToken", "")
-    },
+const AuthorizationService = (api: AxiosInstance = defaultAxiosInstance) => ({
+  logInUser: async (email: string, password: string) => {
+    const input = {
+      email: email,
+      password: password,
+    };
+    const data = await api.post("login", input);
+    return data["data"]["accessToken"];
+  },
 
-    registerUser: async (email: string, password: string) => {
-        const input = {
-            email : email, 
-            password : password
-       }
-       const data = await api.post('register', input)
-       console.log(data['data']['accessToken'])
-       return data['data']['accessToken']
-    }
-})
+  logOut: async () => {
+    localStorage.setItem("accessToken", "");
+  },
 
-export default AuthorizationService
+  registerUser: async (email: string, password: string) => {
+    const input = {
+      email: email,
+      password: password,
+    };
+    const data = await api.post("register", input);
+    return data["data"]["accessToken"];
+  },
+});
+
+export default AuthorizationService;

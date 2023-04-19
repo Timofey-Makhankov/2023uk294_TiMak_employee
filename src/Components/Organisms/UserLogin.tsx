@@ -22,7 +22,6 @@ export default function UserLogin({ prop }: { prop: Auth }) {
      * @param password string from field input
      */
     const login = (email: string, password: string) => {
-        console.log("Inside the login function")
         AuthorizationService().logInUser(email, password)
             .then((value: string) => {
                 localStorage.setItem("access_token", value)
@@ -30,7 +29,6 @@ export default function UserLogin({ prop }: { prop: Auth }) {
                 navigate("/")
             })
             .catch((error: any) => {
-                console.log(error.response)
                 setAlertContent(error.response.data)
                 setAlert(true)
             })

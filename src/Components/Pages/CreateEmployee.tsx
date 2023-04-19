@@ -25,10 +25,9 @@ export default function CreateEmployee() {
      * @param employee Employee Object
      */
     const handleRequest = (employee: Employee) => {
-        console.log("create.")
         EmployeeService().createEmployee(employee)
             .then(() => { navigate("/") })
-            .catch((error) => { console.log(error); alert(error) })
+            .catch((error) => { console.log(error) })
     }
 
     /**
@@ -53,7 +52,7 @@ export default function CreateEmployee() {
                 <Typography variant="h3" component="h2">Create Employee</Typography>
             </Grid>
             <Grid item xs={12}>
-                <TextField required label="Firstname" onChange={(values) => { console.log(values.target.value); setFirstname(values.target.value) }} />
+                <TextField required label="Firstname" onChange={(values) => { setFirstname(values.target.value) }} />
             </Grid>
             <Grid item xs={12}>
                 <TextField required label="Lastname" onChange={(values) => { setLastname(values.target.value) }} />

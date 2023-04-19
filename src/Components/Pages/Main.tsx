@@ -24,8 +24,6 @@ export default function Main() {
     function load() {
       EmployeeService().getAllEmloyees()
         .then((data) => {
-          console.log("test")
-          console.log(data)
           setEmployeeList(data)
         })
         .catch((error) => {
