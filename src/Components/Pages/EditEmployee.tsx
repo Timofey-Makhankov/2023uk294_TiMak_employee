@@ -19,11 +19,13 @@ export default function EditEmployee() {
 
   const [firstname, setFirstname] = useState<string>("")
   const [lastname, setLastname] = useState<string>("")
-  const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs(employee?.birth_date, "YYYY-MM-DD"))
-  const [hireDate, setHireDate] = useState<Dayjs | null>(dayjs(employee?.birth_date, "YYYY-MM-DD"))
+  const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs())
+  const [hireDate, setHireDate] = useState<Dayjs | null>(dayjs())
   const [gender, setGender] = useState<string>("")
 
   let { id } = useParams()
+
+  const INPUT_LENGTH: string = '250px'
 
   /**
    * Sets the Values from the reponse of a single employee Object 
@@ -51,6 +53,9 @@ export default function EditEmployee() {
   function setValues(employee: Employee) {
     setFirstname(employee.first_name)
     setLastname(employee.last_name)
+    setGender(employee.gender)
+    setBirthDate(dayjs(employee.birth_date))
+    setHireDate(dayjs(employee.hire_date))
   }
 
   /**
@@ -82,7 +87,7 @@ export default function EditEmployee() {
             <Typography>Firstname: {employee?.first_name}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <TextField label="Firstname" value={firstname} onChange={(value) => { setFirstname(value.target.value) }} />
+            <TextField label="Firstname" value={firstname} sx={{ width: INPUT_LENGTH }} onChange={(value) => { setFirstname(value.target.value) }} />
           </Grid>
         </Grid>
       </Grid>
@@ -92,7 +97,7 @@ export default function EditEmployee() {
             <Typography>Lastname: {employee?.last_name}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <TextField label="Lastname" value={lastname} onChange={(value) => { setLastname(value.target.value) }} />
+            <TextField label="Lastname" value={lastname} sx={{ width: INPUT_LENGTH }} onChange={(value) => { setLastname(value.target.value) }} />
           </Grid>
         </Grid>
       </Grid>
@@ -103,7 +108,7 @@ export default function EditEmployee() {
           </Grid>
           <Grid item xs={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker label="Hiredate" value={birthDate} onChange={(value) => { setBirthDate(value) }} />
+              <DatePicker label="Birthdate" disableFuture value={birthDate} sx={{ width: INPUT_LENGTH }} onChange={(value) => { setBirthDate(value) }} />
             </LocalizationProvider>
           </Grid>
         </Grid>
@@ -115,7 +120,7 @@ export default function EditEmployee() {
           </Grid>
           <Grid item xs={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker label="Birthdate" disableFuture value={hireDate} onChange={(value) => { setHireDate(value) }} />
+              <DatePicker label="Hiredate" sx={{ width: INPUT_LENGTH }} value={hireDate} onChange={(value) => { setHireDate(value) }} />
             </LocalizationProvider>
           </Grid>
         </Grid>
@@ -126,7 +131,7 @@ export default function EditEmployee() {
             <Typography>Gender: {employee?.gender}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <FormControl>
+            <FormControl sx={{ width: INPUT_LENGTH }} required>
               <FormLabel id="gender-radio">Gender</FormLabel>
               <RadioGroup
                 value={gender}

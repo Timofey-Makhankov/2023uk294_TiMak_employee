@@ -20,6 +20,8 @@ export default function CreateEmployee() {
 
     const navigate = useNavigate()
 
+    const INPUT_LENGTH: string = '250px'
+
     /**
      * It creates a request from the given employee object
      * @param employee Employee Object
@@ -52,25 +54,25 @@ export default function CreateEmployee() {
                 <Typography variant="h3" component="h2">Create Employee</Typography>
             </Grid>
             <Grid item xs={12}>
-                <TextField required label="Firstname" onChange={(values) => { setFirstname(values.target.value) }} />
+                <TextField required label="Firstname" sx={{ width: INPUT_LENGTH }} onChange={(values) => { setFirstname(values.target.value) }} />
             </Grid>
             <Grid item xs={12}>
-                <TextField required label="Lastname" onChange={(values) => { setLastname(values.target.value) }} />
+                <TextField required label="Lastname" sx={{ width: INPUT_LENGTH }} onChange={(values) => { setLastname(values.target.value) }} />
             </Grid>
             <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="Birthdate" disableFuture value={birthDate} onChange={(value) => { setBirthDate(value) }} />
+                    <DatePicker label="Birthdate" sx={{ width: INPUT_LENGTH }} disableFuture value={birthDate} onChange={(value) => { setBirthDate(value) }} />
                 </LocalizationProvider>
             </Grid>
 
             <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="Hiredate" value={hireDate} onChange={(value) => { setHireDate(value) }} />
+                    <DatePicker label="Hiredate" sx={{ width: INPUT_LENGTH }} value={hireDate} onChange={(value) => { setHireDate(value) }} />
                 </LocalizationProvider>
             </Grid>
 
             <Grid item xs={12}>
-                <FormControl required>
+                <FormControl required sx={{ width: INPUT_LENGTH }}>
                     <FormLabel id="gender-radio">Gender</FormLabel>
                     <RadioGroup
                         row
